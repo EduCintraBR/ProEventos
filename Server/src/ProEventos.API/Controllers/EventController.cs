@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProEventos.API.Controllers
 {
@@ -10,67 +12,33 @@ namespace ProEventos.API.Controllers
     [Route("api/")]
     public class EventController : ControllerBase
     {
-        public EventController(ILogger<EventController> logger)
+        private readonly DataContext _context;
+
+        public EventController(DataContext context)
         {
-            
+            this._context = context;
         }
         
         [HttpGet]
         [Route("v1/events")]
         public IEnumerable<Event> Get()
         {
-            return new Event[]
-            {
-                new Event
-                {
-                    EventId = 1,
-                    Theme = "Angular 11 e .NET 5",
-                    Place = "São Sebastião do Paraíso",
-                    Batch = "1º Lote",
-                    AmntPeople = 250,
-                    EventDate = DateTime.Now.AddDays(15).ToString("dd/MM/yyyy"),
-                    ImageURL = "foto.jpeg"
-                },
-                new Event
-                {
-                    EventId =  2,
-                    Theme = "Culto de Homens",
-                    Place = "São Sebastião do Paraíso",
-                    Batch = "1º Lote",
-                    AmntPeople = 50,
-                    EventDate = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy"),
-                    ImageURL = "foto1.jpeg"
-                },
-            };
+            return this._context.Events.ToList();
         }
 
         [HttpGet]
         [Route("v1/events/{id}")]
-        public IEnumerable<Event> GetById(int id)
+        public Event GetById(int id)
         {
-            return new Event[]
-            {
-                new Event
-                {
-                    EventId = 1,
-                    Theme = "Angular 11 e .NET 5",
-                    Place = "São Sebastião do Paraíso",
-                    Batch = "1º Lote",
-                    AmntPeople = 250,
-                    EventDate = DateTime.Now.AddDays(15).ToString("dd/MM/yyyy"),
-                    ImageURL = "foto.jpeg"
-                },
-                new Event
-                {
-                    EventId =  2,
-                    Theme = "Culto de Homens",
-                    Place = "São Sebastião do Paraíso",
-                    Batch = "1º Lote",
-                    AmntPeople = 50,
-                    EventDate = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy"),
-                    ImageURL = "foto1.jpeg"
-                },
-            };
+            return this._context.Events.FirstOrDefault(x => x.EventId == id);
+        }
+
+        [HttpPost]
+        [Route("v1/events")]
+        public void Save([FromBody] Event model)
+        {
+            this._context.Events.Add(model);
+            this._context.SaveChanges();
         }
     }
 }
