@@ -1,7 +1,8 @@
-﻿using ProEventos.Persistence.Contracts;
+﻿using ProEventos.Persistence.Contexts;
+using ProEventos.Persistence.Contracts;
 using System.Threading.Tasks;
 
-namespace ProEventos.Persistence.Repository
+namespace ProEventos.Persistence.Repositories
 {
     class GeneralRepository : IGeneralContract
     {

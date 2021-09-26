@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain.Entities;
+using ProEventos.Persistence.Contexts;
 using ProEventos.Persistence.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProEventos.Persistence.Repository
+namespace ProEventos.Persistence.Repositories
 {
     class EventRepository : IEventContract
     {

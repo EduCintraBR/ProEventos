@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Contracts
 {
-    interface IEventContract
+    public interface IEventContract
     {
-        Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includePanelists);
-        Task<Event[]> GetAllEventsAsync(bool includePanelists);
-        Task<Event> GetEventByIdAsync(int EventId, bool includePanelists);
+        Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includePanelists = false);
+        Task<Event[]> GetAllEventsAsync(bool includePanelists = false);
+        Task<Event> GetEventByIdAsync(int eventId, bool includePanelists = false);
     }
 }

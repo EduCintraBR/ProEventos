@@ -2,7 +2,7 @@
 
 namespace ProEventos.Persistence.Contracts
 {
-    interface IGeneralContract
+    public interface IGeneralContract
     {
         void Add<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;
