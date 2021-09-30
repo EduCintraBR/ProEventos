@@ -1,7 +1,7 @@
 ﻿using ProEventos.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace ProEventos.Persistence
+namespace ProEventos.Persistence.Contracts
 {
     public interface IPanelistContract
     {

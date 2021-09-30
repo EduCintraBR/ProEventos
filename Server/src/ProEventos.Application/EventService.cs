@@ -6,7 +6,7 @@ using ProEventos.Persistence.Contracts;
 
 namespace ProEventos.Application
 {
-    class EventService : IEventService
+    public class EventService : IEventService
     {
         private readonly IGeneralContract _generalPersist;
         private readonly IEventContract _eventPersist;
@@ -39,11 +39,13 @@ namespace ProEventos.Application
         {
             try
             {
-                var evento = this._eventPersist.GetEventByIdAsync(eventId, false);
+                var evento = await this._eventPersist.GetEventByIdAsync(eventId, false);
 
                 if (evento == null) return null;
 
                 model.Id = evento.Id;
+
+                this._generalPersist.Update<Event>(model);
 
                 if (await this._generalPersist.SaveChangesAsync())
                     return await this._eventPersist.GetEventByIdAsync(model.Id, false);

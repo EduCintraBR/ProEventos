@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Repositories
 {
-    class GeneralRepository : IGeneralContract
+    public class GeneralRepository : IGeneralContract
     {
         private readonly ProEventsContext _context;
 

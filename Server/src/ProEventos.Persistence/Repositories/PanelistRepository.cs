@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain.Entities;
 using ProEventos.Persistence.Contexts;
+using ProEventos.Persistence.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Repositories
 {
-    class PanelistRepository : IPanelistContract
+    public class PanelistRepository : IPanelistContract
     {
         private readonly ProEventsContext _context;
 

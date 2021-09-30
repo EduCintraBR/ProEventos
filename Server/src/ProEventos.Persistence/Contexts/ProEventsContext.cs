@@ -18,6 +18,16 @@ namespace ProEventos.Persistence.Contexts
         {
             modelBuilder.Entity<EventPanelist>()
                 .HasKey(PE => new {PE.EventId, PE.PanelistId});
+
+            modelBuilder.Entity<Event>()
+                .HasMany(e => e.SocialNetworks)
+                .WithOne(rs => rs.Event)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Panelist>()
+                .HasMany(p => p.SocialNetworks)
+                .WithOne(rs => rs.Panelist)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

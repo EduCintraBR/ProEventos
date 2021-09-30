@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Repositories
 {
-    class EventRepository : IEventContract
+    public class EventRepository : IEventContract
     {
         private readonly ProEventsContext _context;
 
@@ -18,7 +18,7 @@ namespace ProEventos.Persistence.Repositories
 
         public async Task<Event[]> GetAllEventsAsync(bool includePanelists = false)
         {
-            IQueryable<Event> query = this._context.Events
+            IQueryable<Event> query = this._context.Events.AsNoTracking()
                     .Include(e => e.Batches)
                     .Include(e => e.SocialNetworks);
 
@@ -34,7 +34,7 @@ namespace ProEventos.Persistence.Repositories
 
         public async Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includePanelists = false)
         {
-            IQueryable<Event> query = this._context.Events
+            IQueryable<Event> query = this._context.Events.AsNoTracking()
                     .Include(e => e.Batches)
                     .Include(e => e.SocialNetworks);
 
@@ -49,16 +49,16 @@ namespace ProEventos.Persistence.Repositories
             return await query.ToArrayAsync();
         }
 
-        public async Task<Event> GetEventByIdAsync(int EventId, bool includePanelists = false)
+        public async Task<Event> GetEventByIdAsync(int eventId, bool includePanelists = false)
         {
-            IQueryable<Event> query = this._context.Events
+            IQueryable<Event> query = this._context.Events.AsNoTracking()
                 .Include(e => e.Batches)
                 .Include(e => e.SocialNetworks);
 
             if (includePanelists)
                 query = query.Include(e => e.EventsPanelists).ThenInclude(pe => pe.Panelist);
 
-            query = query.OrderBy(e => e.Id);
+            query = query.OrderBy(e => e.Id).Where(e => e.Id == eventId);
 
             return await query.FirstOrDefaultAsync();
         }
